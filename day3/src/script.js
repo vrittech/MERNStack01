@@ -207,3 +207,19 @@ checkIfNumberIsOneOrNot(2)
 
 console.log('As')
 
+
+// function and returns a enhanced version of it
+
+function SuperHero(man){
+    return {...man , power : "Super Strength"}
+}
+
+let man = {
+    name : "Clark Kent"
+}
+
+let superMan = SuperHero(man);
+
+console.log(man)
+console.log(superMan)
+
