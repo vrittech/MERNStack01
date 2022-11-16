@@ -23,30 +23,80 @@
 // A button when clicked increases the state by 1
 // A button when clicked decreases the state by 1
 // make a element that shows the state
-
+import "./App.css";
 import { useState } from "react";
 function App() {
-  const [counter, setCounter] = useState(0);
+  return <Todos />;
+}
 
-  const handleClickInc = () => {
-    setCounter((prevValue) => {
-      return prevValue + 1;
-    });
-  };
+function Todos() {
+  const AppTitle = "TodoApp";
+  const [todoList, setTodoList] = useState(["Buy a pen", "Read a  Book"]);
 
-  const handleClickDec = () => {
-    setCounter((prevValue) => {
-      return prevValue - 1;
-    });
-  };
+  const onAddTodo = (todo) => {
+    setTodoList((prev) => [...prev, todo])
+  }
 
   return (
-    <>
-      <h1>{counter}</h1>
-      <button onClick={handleClickInc}>Increase</button>
-      <button onClick={handleClickDec}>Decrease</button>
-    </>
+    <div className="todo-card" style={{
+      backgroundColor: 'red',color : 'blue'
+    }}>
+      <TodoTitle title={AppTitle} />
+      <AddTodo addTodo={onAddTodo} />
+      <TodoList todos={todoList} />
+      <br />
+      <TodoFooter />
+    </div>
   );
 }
 
+function TodoTitle({ title }) {
+  return <div className="todo-card title">{title}</div>;
+}
+
+function AddTodo({addTodo}) {
+  console.log("Add Rerender")
+
+  const [todo, setTodo] = useState('');
+
+  const handleTodo = (event) => {
+    const todoValue = event.target.value;
+  
+    setTodo((_) => todoValue)
+  }
+
+  const handleTodoAdd = () => {
+    addTodo([...todo])
+    
+    setTodo((_) => "")
+  }
+
+  return (
+    <div className="todo-card add-todo">
+      <input placeholder="Add your new Todo" onChange={handleTodo} value={todo} />
+      <button onClick={handleTodoAdd}>+</button>
+    </div>
+  );
+}
+
+function TodoList({ todos }) {
+  return (
+    <div className="todo-card todo-list">
+      {todos.map((todo, index) => (
+        <div key={index}>{todo}</div>
+      ))}
+    </div>
+  );
+}
+
+function TodoFooter() {
+  return (
+    <div className="todo-card todo-footer">
+      <div className="todo-card pending-tasks">You have 4 pending tasks</div>
+      <div>
+        <button>Clear All</button>
+      </div>
+    </div>
+  );
+}
 export default App;
