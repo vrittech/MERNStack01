@@ -6,11 +6,13 @@
 import {
   createContext,
   forwardRef,
+  useContext,
   useEffect,
   useId,
   useRef,
   useState,
 } from "react";
+import Counter from "./Counter";
 import useFetch from "./hooks/useFetch";
 import { MyContext } from "./MyContext";
 import Todos from "./Todo";
@@ -57,26 +59,85 @@ import Todos from "./Todo";
 // React best practices
 // useCallback, useMemo
 
-import "./todo.css";
+import "./App.css";
+import { UserContext } from "./UserContext";
+/*
+<App> => Todo Object
+  <AddTodo onAddTodo={addTodo}/> => <input onChange((event) => onAddTodo(event.target.value))/>
+  <TodoList todos={todos}/> => <Todo />
+  <Footer />
+</App>
 
 
-function App() {
-  const [loading, todos] = useFetch();
-  const [display, setDisplay] = useState("abc");
+*/
+
+function Products(){
+  const [products, setProducts] = useState([
+    {id : 1, title : "Mobile Phone", price : "Rs 500"},
+    {id : 2, title : "Rice", price : "Rs 1400"},
+    {id : 3, title : "Meat", price : "Rs 400"}
+
+  ])
+
+  const username = useContext(UserContext)
+  
+  console.log("Prduct Rerendered")
   return (
-    <MyContext.Provider value={display}>
-      <button onClick={() => setDisplay("123")}>Change </button>
-      <div
-        style={{
-          display: "flex",
-          margin: "10px",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        {loading ? "Loading" : <Todos todos={todos} />}
+    <div className="products">
+      {
+        products.map((product) => {
+          return (
+            <div key = {product.id} className="productItems">
+                <h1>{product.title}</h1>
+                <p>{product.price}</p>
+                <p>Currently loggedin user : {username}</p>
+              </div>
+          )
+        })
+      }
       </div>
-    </MyContext.Provider>
+  )
+}
+
+function Header(){
+  const [username, setUsername] = useState("Sushil")
+  return(
+  <header className="header">
+  <div className="header_username">{username}</div>
+  <input onChange={(event) => setUsername(event.target.value)}placeholder="Change UserName"></input>
+</header>
+  )
+}
+function App() {
+
+  return (
+    <>
+   
+
+    <UserContext.Provider value={"Context Sushil"}>
+   
+   
+    <div className="homepage">
+      <Header />
+    <Products/>
+    
+      </div>
+      </UserContext.Provider>
+      </>
+    // <Counter />
+    // <MyContext.Provider value={display}>
+    //   <button onClick={() => setDisplay("123")}>Change </button>
+    //   <div
+    //     style={{
+    //       display: "flex",
+    //       margin: "10px",
+    //       alignItems: "center",
+    //       flexDirection: "column",
+    //     }}
+    //   >
+    //     {loading ? "Loading" : <Todos todos={todos} />}
+    //   </div>
+    // </MyContext.Provider>
   );
 }
 
