@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+import { useContext, useReducer, useRef } from "react";
+import { TodoContext } from "../../context/TodoContext";
 import TodoList from "./TodoList";
 
 //Action has two properties
@@ -12,12 +13,18 @@ import TodoList from "./TodoList";
 // useReducer 
 // Flux Pattern
 function Todo() {
+  const todoRef = useRef()
+  const {addTodo} = useContext(TodoContext)
 
-
+  const handleAddTodo = () => {
+    addTodo(todoRef.current.value); 
+    todoRef.current.value=''
+  }
  
   return (
     <>
-     
+      <input placeholder="Create todo...."  ref={todoRef} />
+      <button onClick={handleAddTodo}>Add Todo</button>
       <TodoList/>
     </>
   );

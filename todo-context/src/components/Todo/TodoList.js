@@ -1,44 +1,66 @@
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useReducer, useRef, useState } from "react";
+import { Modal } from "../../container/Modal";
 import { TodoContext } from "../../context/TodoContext";
-import { TODO_ACTIONS } from "./actions/todoAction";
 import { TodoController } from "./reducer/todoReducer";
-import { initialState } from "./store";
 
 function TodoList() {
- const [todos, dispatch] = useReducer(TodoController, initialState)
-
- const fetchTodos = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/todos");
-  const data = await response.json();
-  dispatch({type: TODO_ACTIONS.ADD_TODOS, payload : data})
-};
-
-useEffect(() => {
-  fetchTodos();
-}, []);
-
+  const { todos } = useContext(TodoContext);
   return (
     <>
       {todos.map((todo) => (
-        <Todo key={todo.id} todo={todo} dispatch={dispatch} />
+        <Todo key={todo.id} todo={todo} />
       ))}
     </>
   );
 }
 
-function Todo({ todo, dispatch }) {
+function Todo({ todo }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const { completeTodos, deleteTodo, editTodo } = useContext(TodoContext);
+  const [value, setValue] = useState({});
+
+  const showModal = (todo) => {
+    setValue(todo);
+    setIsEditing(true);
+  };
+
+  const submitEdit = (event) => {
+    if (event.key === "Enter") {
+      editTodo({ todo: value.title, id: value.id });
+      setIsEditing(false)
+      setValue({})
+    }
+  };
   
   return (
-    <div
-    onClick={() => dispatch({type : TODO_ACTIONS.COMPLETE_TODO, payload: todo.id})}
-      style={
-        todo.completed
-          ? { textDecoration: "line-through", cursor: "pointer" }
-          : { cursor: "pointer" }
-      }
-    >
-      {todo.title}
-    </div>
+    <>
+      <div
+        onClick={() => completeTodos(todo.id)}
+        style={
+          todo.completed
+            ? { textDecoration: "line-through", cursor: "pointer" }
+            : { cursor: "pointer" }
+        }
+      >
+        {todo.title}
+      </div>
+      <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+      <button onClick={() => showModal(todo)}>Edit</button>
+      {isEditing && (
+        <div>
+          <input
+            placeholder="Edit Me!"
+            value={value.title}
+            onChange={(event) =>
+              setValue((current) => {
+                return { ...current, title: event.target.value };
+              })
+            }
+            onKeyDown={(event) => submitEdit(event)}
+          />
+        </div>
+      )}
+    </>
   );
 }
 
