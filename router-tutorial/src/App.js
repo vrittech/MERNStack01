@@ -1,54 +1,18 @@
-import logo from "./logo.svg";
+import { RouterProvider } from "react-router-dom";
+import {router} from './routes'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
-import { createBrowserRouter, Outlet, RouterProvider, useParams } from "react-router-dom";
+import MyNav from "./components/navbar/Navbar";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <div>Hello World</div>,
-  },
-  {
-    path : '/a',
-    element: <div>I am at the A element</div>
-  },
-   {
-    path : '/:id',
-    element: <MyId />,
-    children: [
-      
-        {
-          path: "contacts",
-          element: <div>Contact Child</div>,
-        },
-        {
-          path: "display",
-          element: <div>Display Child</div>,
-        },
-      
-    ]
-  },
-  
-]);
 
 function App() {
   return (
     <div className="App">
-      asdasda
-      <RouterProvider router={router} />
+     <RouterProvider router={router}>
+      </RouterProvider>
     </div>
   );
 }
 
-
-function MyId(){
-  const {id, name} = useParams();
-
-  return (
-    <div>
-     {id}
-     <Outlet />
-    </div>
-  )
-}
 
 export default App;
