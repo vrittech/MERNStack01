@@ -1,29 +1,20 @@
 const express = require('express');
+const router = require('./src/routes');
 
 const app = express()
-
-let TODOS = []
-
 
 app.use(express.json({
     urlencoded : true
 }))
-//Get request sends the data from server to the client
-app.get('/todos', (req,res) => {
-    return res.status(200).json({todos : TODOS})
-})
 
-//Post request saves the data from client to server
-// data hiding
-app.post('/todos', (req,res) => {
-    
-    const todo = req.body
-    TODOS.push(todo)
-
-    return res.status(200).json({
-        message : "Todo created successfully"
-    })
-})
+//
+/*
+req
+res
+next
+*/
+//Middleware
+app.use('/', router)
 
 app.listen(8000,() => {
     console.log("App running at port 8000")
