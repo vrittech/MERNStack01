@@ -62,4 +62,30 @@ const requestListner = (req,res) => {
 http.createServer(requestListner).listen(8000)
 
 
- 
+ // Database
+ // What is database MongoDb -> Mongo Database
+ // Database : store
+ // data store
+ // 2 major databases
+ // SQL vs NoSQL
+ // SQL are usually Relational Databases
+ // The database which have relations between the data
+ // NoSQL 1) We cannot use SQL queries
+ // 2) they are not usually relational in nature
+ // Each data is by their own
+ // MongoDB is a NoSQL database.
+ // It doesn't follow traditional relational architecure
+ // Table, relations
+ // Table -> Collections
+ // Data -> Documents
+ // Each documents are JSON structured
+ // The storage module creates a BSON file
+ // It uses js interfaces to query the data
+ // CRUD operations
+ // Mongo DB is completely written in C++  
+
+
+ // user is a collection -> {username, password, firstname, lastname, email}
+ // todo is collection -> {title, completed}
+ // Products -> {productName, price, category, type}
+ // category

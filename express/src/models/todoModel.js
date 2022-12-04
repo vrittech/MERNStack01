@@ -1,13 +1,14 @@
-let TODOS = []
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const TodoModel = {
-    getTodo : () => {
-        return TODOS;
-    },
+const TodoSchema = new Schema({
+  title: {
+    type : String,
+    required: "Title is required"
+  },
+  completed: Boolean
+});
 
-    insertTodo : (todo) => {
-      TODOS.push(todo)  
-    }
-}
+const Todo = mongoose.model('Todo', TodoSchema)
 
-module.exports = TodoModel
+module.exports = Todo
