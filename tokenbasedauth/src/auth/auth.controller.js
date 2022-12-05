@@ -1,6 +1,7 @@
 const AuthService = require("./index");
 const AuthController = {
   login: async (req, res) => {
+    console.log(req.body)
     const { email, password } = req.body;
 
     //Some business logic
