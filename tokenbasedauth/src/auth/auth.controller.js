@@ -6,7 +6,7 @@ const AuthController = {
 
     //Some business logic
     try {
-      const { token, loggedInUser } = await AuthService.attemptLogin(
+      const { token, loggedInUser, refreshToken } = await AuthService.attemptLogin(
         email,
         password
       );
@@ -16,6 +16,7 @@ const AuthController = {
         data: {
           user: loggedInUser,
           token,
+          refreshToken
         },
       });
     } catch (err) {
@@ -53,6 +54,14 @@ const AuthController = {
       user,
     });
   },
+
+  refreshToken : async (req,res) => {
+    const {token, refreshToken} = req.tokens;
+    return res.status(200).json({
+      token,
+      refreshToken
+    })
+  }
 };
 
 module.exports = AuthController;

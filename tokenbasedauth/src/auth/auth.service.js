@@ -20,9 +20,11 @@ class AuthService {
 
     // generate the token
     const token = await TokenHelper.generateToken({ id: user._id });
+    //Also generate a refresh token
+    const refreshToken = await TokenHelper.generateRefreshToken({id: user._id, type : "refresh"})
     const loggedInUser = JSON.parse(JSON.stringify(user));
 
-    return { loggedInUser, token };
+    return { loggedInUser, token, refreshToken };
   }
 
   async registerUser(email, password) {

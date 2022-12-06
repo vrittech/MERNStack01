@@ -1,5 +1,5 @@
 const AuthController = require('./auth.controller');
-const AuthMiddleware = require('./auth.middleware');
+const { verifyUser, generateTokens } = require('./auth.middleware');
 
 const authRouter = require('express').Router();
 
@@ -7,6 +7,9 @@ authRouter.post('/login', AuthController.login);
 
 authRouter.post('/register', AuthController.register)
 
-authRouter.get('/me', AuthMiddleware,AuthController.me)
+authRouter.post('/refresh_token',generateTokens, AuthController.refreshToken)
+
+
+authRouter.get('/me', verifyUser,AuthController.me)
 
 module.exports = authRouter;

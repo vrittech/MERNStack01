@@ -89,3 +89,20 @@ http.createServer(requestListner).listen(8000)
  // todo is collection -> {title, completed}
  // Products -> {productName, price, category, type}
  // category
+
+
+ //Authentication
+ /*
+    1) Verification of identity
+    2) Client Server
+    3) The client sends a auth request to server
+    4) The server responds with a token or initiate a session
+ */
+
+// Authorization
+/*
+    1) Does the authenticated user has permission to do certain action.
+    2) Permissions can be dynamic or they are static based on role
+*/
+
+// OAUTH

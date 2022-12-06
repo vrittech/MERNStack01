@@ -1,10 +1,12 @@
 import axios from "../../config/axios";
 import { useRef, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+ function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const submitForm = async (event) => {
@@ -17,7 +19,9 @@ export default function Login() {
       setError(null);
       //save the token in LocalStorage
       localStorage.setItem("access_token", data.token);
+      localStorage.setItem("refresh_token", data.refreshToken);
       // redirect
+      navigate("/products")
     } catch (err) {
       console.log("My Error", err);
       setError(err.message);
@@ -81,3 +85,5 @@ export default function Login() {
     </Card>
   );
 }
+
+export default Login;

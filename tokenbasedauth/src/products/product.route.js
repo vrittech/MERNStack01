@@ -1,11 +1,11 @@
-const AuthMiddleware = require("../auth/auth.middleware");
+const { verifyUser } = require("../auth/auth.middleware");
 const ProductController = require("./product.controller");
 
 const productRouter = require("express").Router();
 
-productRouter.post("/", AuthMiddleware, ProductController.createProduct);
+productRouter.post("/", verifyUser, ProductController.createProduct);
 
-productRouter.get("/", AuthMiddleware, ProductController.getProduct);
+productRouter.get("/", verifyUser, ProductController.getProduct);
 
 
 module.exports = productRouter
