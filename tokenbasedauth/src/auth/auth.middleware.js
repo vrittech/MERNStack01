@@ -1,3 +1,4 @@
+const { ADMIN } = require("../constants/roles");
 const TokenHelper = require("../helper/TokenHelper");
 const User = require("../user/user");
 
@@ -38,7 +39,9 @@ const AuthMiddleware = {
 
   generateTokens : async (req,res,next) => {
     const {refreshToken} = req.body;
-  
+     
+
+    //Check if the refresh token exists in the db
 
     if(!refreshToken){
       return res.status(401).json({
@@ -54,7 +57,7 @@ const AuthMiddleware = {
           message: "Invalid Token",
         });
       }
-      //We know that the token is good]
+      //We know that the token is good
       //Get the user with that id from the database
       const user = await User.findOne({ _id: id }, "-password");
       if(!user){
@@ -73,6 +76,17 @@ const AuthMiddleware = {
         message: err.message,
       });
     }
+  },
+
+  checkAdmin : (req,res, next) => {
+    const {user} = req;
+    if(user.role !== ADMIN){
+      return res.status(403).json({
+        message : "NOT PERMITTED TO ADD THE RESOURCE"
+      })
+    }
+    next()
+
   }
 };
 

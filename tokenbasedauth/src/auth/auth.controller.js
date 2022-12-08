@@ -1,7 +1,7 @@
 const AuthService = require("./index");
 const AuthController = {
   login: async (req, res) => {
-    console.log(req.body)
+  
     const { email, password } = req.body;
 
     //Some business logic
@@ -20,7 +20,7 @@ const AuthController = {
         },
       });
     } catch (err) {
-      console.log(err);
+    
       return res.status(401).json({
         message: err.message,
       });
@@ -29,7 +29,7 @@ const AuthController = {
 
   register: async (req, res) => {
     const { email, password } = req.body;
-
+    
     //Some business logic
     try {
       const registeredUser = await AuthService.registerUser(email, password);

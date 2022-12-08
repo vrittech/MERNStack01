@@ -11,6 +11,7 @@ class AuthService {
     if (!user) {
       throw new Error("Auth Failed");
     }
+   
     // Compare the password
     const isValidPassword = await AuthHelper.compareHash(
       password,
@@ -34,7 +35,7 @@ class AuthService {
     }
 
     const hashedPassword = await AuthHelper.hashPassword(password)
-    const newUser = new this.User({email, password : hashedPassword}).save()
+    const newUser = new this.User({email, password : hashedPassword, role : "ADMIN"}).save()
 
 
     return newUser

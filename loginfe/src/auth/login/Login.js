@@ -3,6 +3,17 @@ import { useRef, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+function Counter  () {
+  const [count, setCount] = useState(0);
+
+  return(
+    <>
+    {count}
+    <button onClick={() => setCount(prev => prev+1)}>Increase cound</button>
+    </>
+
+  )
+}
  function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -49,40 +60,45 @@ import { useNavigate } from "react-router-dom";
     }
   };
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>Login</Card.Title>
-        <Card.Subtitle>{error}</Card.Subtitle>
-        <Card.Text>
-          <Form onSubmit={submitForm}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                ref={emailRef}
-                type="email"
-                placeholder="Enter email"
-              />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
+    <>
+    <Counter />
+    <Counter />
+    </>
+    // <Card>
+    //   <Card.Body>
+    //     <Card.Title>Login</Card.Title>
+    //     <Card.Subtitle>{error}</Card.Subtitle>
+    //     <Card.Text>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                ref={passwordRef}
-                type="password"
-                placeholder="Password"
-              />
-            </Form.Group>
+    //       <Form onSubmit={submitForm}>
+    //         <Form.Group className="mb-3" controlId="formBasicEmail">
+    //           <Form.Label>Email address</Form.Label>
+    //           <Form.Control
+    //             ref={emailRef}
+    //             type="email"
+    //             placeholder="Enter email"
+    //           />
+    //           <Form.Text className="text-muted">
+    //             We'll never share your email with anyone else.
+    //           </Form.Text>
+    //         </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </Card.Text>
-      </Card.Body>
-    </Card>
+    //         <Form.Group className="mb-3" controlId="formBasicPassword">
+    //           <Form.Label>Password</Form.Label>
+    //           <Form.Control
+    //             ref={passwordRef}
+    //             type="password"
+    //             placeholder="Password"
+    //           />
+    //         </Form.Group>
+
+    //         <Button variant="primary" type="submit">
+    //           Submit
+    //         </Button>
+    //       </Form>
+    //     </Card.Text>
+    //   </Card.Body>
+    // </Card>
   );
 }
 
