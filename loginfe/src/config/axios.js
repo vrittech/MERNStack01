@@ -39,7 +39,8 @@ instance.interceptors.response.use(
       if (
         error.config.url !== "/auth/refresh_token" &&
         error.config.url !== "/auth/login" &&
-        error.config.url !== "/auth/register"
+        error.config.url !== "/auth/register" && 
+        error.config.url !== '/auth/google/login'
       ) {
         //Now this is a valid response
         const refresh_token = localStorage.getItem('refresh_token');

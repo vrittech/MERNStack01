@@ -2,19 +2,22 @@ import axios from "../../config/axios";
 import { useRef, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
+import instance from "../../config/axios";
 
-function Counter  () {
+function Counter() {
   const [count, setCount] = useState(0);
 
-  return(
+  return (
     <>
-    {count}
-    <button onClick={() => setCount(prev => prev+1)}>Increase cound</button>
+      {count}
+      <button onClick={() => setCount((prev) => prev + 1)}>
+        Increase cound
+      </button>
     </>
-
-  )
+  );
 }
- function Login() {
+function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
@@ -32,7 +35,7 @@ function Counter  () {
       localStorage.setItem("access_token", data.token);
       localStorage.setItem("refresh_token", data.refreshToken);
       // redirect
-      navigate("/products")
+      navigate("/products");
     } catch (err) {
       console.log("My Error", err);
       setError(err.message);
@@ -59,10 +62,21 @@ function Counter  () {
       throw error.response.data;
     }
   };
+
+  const responseGoogle = async (response) => {
+    
+    const {credential} = response;
+    const {data} = await instance.post('/auth/google/login', {idToken : credential})
+    console.log(data);
+  };
   return (
     <>
-    <Counter />
-    <Counter />
+      {/* <Counter />
+    <Counter /> */}
+      <GoogleLogin
+        onSuccess={responseGoogle}
+        onError={responseGoogle}
+      />
     </>
     // <Card>
     //   <Card.Body>

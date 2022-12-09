@@ -10,13 +10,16 @@ const UserSchema = new Schema({
     },
     password : {
         type : String,
-        required : "Password is required"
+        
     },
     role : {
         type : String,
         enum : [ADMIN, USER],
         default: USER,
         required : "Role is required"
+    },
+    googleLogin : {
+        type: Boolean
     }
 })
 

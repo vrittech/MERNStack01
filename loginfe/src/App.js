@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 import Products from "./products/Products";
 import Message from "./message/Message";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const router = createBrowserRouter([
   {
@@ -27,9 +28,14 @@ function App() {
  
 
   return (
+   <>
+   <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+
     <div className="App">
         <RouterProvider router={router} />
     </div>
+    </GoogleOAuthProvider>
+    </>
   );
 }
 
