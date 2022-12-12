@@ -14,8 +14,9 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { createContext, useContext, useState } from "react";
-
-export const CategoryContext = createContext([]);
+import  {
+  CategoryContext,
+} from "../../context/CategoryContext";
 
 function Logo() {
   return <Navbar.Brand href="#">NORLON</Navbar.Brand>;
@@ -29,16 +30,16 @@ function AppSearchBar() {
     <InputGroup className="mr-3">
       <DropdownButton
         variant="outline-secondary"
-        title={activeCategory}
+        title="All Categories"
         id="input-group-dropdown-1"
       >
         {categories.map((category, index) => (
           <Dropdown.Item
-            onClick={() => handleCategoryChange(category)}
-            key={index}
-            active={activeCategory === category ? true : false}
+            onClick={() => handleCategoryChange(category.name)}
+            key={category._id}
+            active={activeCategory === category._id ? true : false}
           >
-            {category}
+            {category.name}
           </Dropdown.Item>
         ))}
       </DropdownButton>
@@ -53,17 +54,17 @@ function AppDropDownCategories() {
   return (
     <Dropdown>
       <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-        {activeCategory}
+        All Categories
       </Dropdown.Toggle>
 
       <Dropdown.Menu variant="dark">
         {categories.map((category, index) => (
           <Dropdown.Item
-            onClick={() => handleCategoryChange(category)}
-            key={index}
-            active={activeCategory === category ? true : false}
+            onClick={() => handleCategoryChange(category.name)}
+            key={category._id}
+            active={activeCategory === category._id ? true : false}
           >
-            {category}
+            {category.name}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>
@@ -72,19 +73,8 @@ function AppDropDownCategories() {
 }
 
 function AppNavbar() {
-  const [activeCategory, setActiveCategory] = useState("B");
-
-  const handleCategoryChange = (category) => {
-    setActiveCategory(category);
-  };
   return (
-    <CategoryContext.Provider
-      value={{
-        categories: ["All Categories", "A", "B", "C"],
-        handleCategoryChange,
-        activeCategory,
-      }}
-    >
+    <>
       {[true].map((expand) => (
         <Navbar key={expand} bg="light" expand={expand} className="mb-3">
           <Container fluid>
@@ -116,7 +106,7 @@ function AppNavbar() {
           </Container>
         </Navbar>
       ))}
-    </CategoryContext.Provider>
+    </>
   );
 }
 function Header() {
