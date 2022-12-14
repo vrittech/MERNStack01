@@ -13,10 +13,11 @@ import {
   faHeart,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import  {
   CategoryContext,
 } from "../../context/CategoryContext";
+import { ProductSearchContext } from "../../context/ProductSearchContext";
 
 function Logo() {
   return <Navbar.Brand href="#">NORLON</Navbar.Brand>;
@@ -26,6 +27,15 @@ function AppSearchBar() {
   const { categories, activeCategory, handleCategoryChange } =
     useContext(CategoryContext);
 
+    const {handleSearchStringChange} = useContext(ProductSearchContext);
+
+    const searchRef = useRef("");
+
+    const handleSearch = (event) => {
+      if(event.key === 'Enter'){
+        handleSearchStringChange(searchRef.current.value)
+      }
+    }
   return (
     <InputGroup className="mr-3">
       <DropdownButton
@@ -43,7 +53,7 @@ function AppSearchBar() {
           </Dropdown.Item>
         ))}
       </DropdownButton>
-      <Form.Control aria-label="Text input with dropdown button" />
+      <Form.Control aria-label="Text input with dropdown button" onKeyDown={handleSearch} ref={searchRef}  />
     </InputGroup>
   );
 }
