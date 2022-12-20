@@ -7,6 +7,11 @@ const instance = axios.create({
   withCredentials: true
 });
 
+/*
+axiosClient -> request -> request Interceptor -> main request
+response -> response Interceptor -> axios instance -> requester
+
+*/
 instance.interceptors.request.use((config) => {
   const access_token = localStorage.getItem("access_token");
 
