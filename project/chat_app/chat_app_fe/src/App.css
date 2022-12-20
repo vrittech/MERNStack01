@@ -1,0 +1,35 @@
+.App {
+ 
+}
+
+.sender { 
+  flex: 1;
+  /* align-content: flex-end; */
+  justify-content: flex-end;
+  display: flex;
+ 
+}
+
+.receiver { 
+  flex: 1;
+  /* align-content: flex-end; */
+  justify-content: flex-start;
+  display: flex;
+ 
+}
+
+.sender-message { 
+  padding: 10px;
+  background: #6d7bc1;
+  margin: 10px;
+  color: white;
+}
+
+.receiver-message { 
+  padding: 10px;
+  background: #686869;
+  margin: 10px;
+  color: white;
+}
+
+
