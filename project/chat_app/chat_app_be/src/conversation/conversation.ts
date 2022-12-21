@@ -3,27 +3,8 @@ import mongoose, { Mongoose } from "mongoose"
 export interface IConversation {
    
     conversation_name : string,
-    members : IMember[],
+    members : mongoose.Types.ObjectId[],
 }
-
-export interface IMember { 
-    name : string,
-    surname : string
-}
-
-
-
-export const MemberSchema = new mongoose.Schema<IMember>({
-    name : {
-        type : String,
-        required : [true, "Member name is required"]
-    },
-    surname : {
-        type : String,
-        required : [true, "Member surname is required"]
-    },
-
-})
 
 
  const ConversationSchema = new mongoose.Schema<IConversation>({
@@ -31,7 +12,12 @@ export const MemberSchema = new mongoose.Schema<IMember>({
         type: String,
         required: [true, "Conversation Name is required"]
     },
-    members: [MemberSchema]
+    members: [
+        {
+            type : mongoose.Types.ObjectId,
+            ref : "member"
+        }
+    ]
 })
 
 

@@ -23,7 +23,12 @@ export default class MessageService implements IMessageService{
     async getMessagesofConverstaion(conversation_id : string): Promise<IMessage[]> {
        const messages = await this._model.find({
         conversation_id
-       }).populate("conversation_id")
+       }).populate({
+        path : "conversation_id",
+        populate: {
+            path : "members"
+        }
+       }).populate("from")
        return messages;
      }
 }

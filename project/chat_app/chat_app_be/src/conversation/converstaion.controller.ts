@@ -1,12 +1,11 @@
-import ConversationModel, { IMember } from "./conversation";
+import ConversationModel from "./conversation";
 import ConversationService from "./conversation.service";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 const ConversationController = {
   create: async (req: Request, res: Response) => {
-    const { name, members } = req.body as {
-      name: string;
-      members: IMember[];
-    };
+    let { name, members } = req.body;
+    members = members.map((member:string) => new mongoose.Types.ObjectId(member))
     const converstaionService = new ConversationService(ConversationModel);
     try {
       const conversation = await converstaionService.createConversation(
