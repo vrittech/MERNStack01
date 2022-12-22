@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { useSearchParams } from "react-router-dom";
+import { SocketContext } from "../App";
 
 export interface IConversation {
   _id: string;
@@ -32,6 +33,7 @@ export default function Home() {
   const [conversations, setConversations] = useState<IConversation[]>([]);
   const messageRef = useRef<HTMLInputElement | null>(null);
   const [searchParams] = useSearchParams();
+  const {message} = useContext(SocketContext)
   const loggedInUser = searchParams.get("loggedInUser");
   const [selectedConversation, setSelectedConversation] = useState<string>(
     "639fc8fc96a7be609a9f0eaa"
@@ -39,12 +41,18 @@ export default function Home() {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [members, setMembers] = useState<IMember[]>([]);
 
+
+  useEffect(() => {
+    if(message){
+     setMessages((prev) => [...prev, message])
+    }
+  }, [message])
+
   useEffect(() => {
     getAllConversations();
   }, []);
 
   useEffect(() => {
-    console.log("This effect is called")
     getMessagesOfConversation();
   }, [selectedConversation]);
 
@@ -54,7 +62,6 @@ export default function Home() {
     );
     const data = await response.json();
     const conversation_id= data.messages?.[0]?.conversation_id;
-    console.log(conversation_id)
     const membersOfConversation = conversation_id?.members ?? []
     setMembers(membersOfConversation);
     setMessages(data.messages);
